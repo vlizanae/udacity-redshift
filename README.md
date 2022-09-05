@@ -55,6 +55,22 @@ python etl.py
 
 ## Sample Query
 
+Top 10 months with more usage:
+```sql
+SELECT
+    T.year               AS year,
+    T.month              AS month,
+    COUNT(P.songplay_id) AS reproductions
+
+FROM songplay P
+JOIN time     T ON P.start_time = T.start_time
+
+GROUP BY T.year, T.month
+ORDER BY reproductions DESC
+
+LIMIT 10;
+```
+
 Top 10 most listened songs on 2018:
 ```sql
 SELECT
@@ -68,7 +84,7 @@ JOIN time     T ON P.start_time = T.start_time
 WHERE T.year = 2018
 
 GROUP BY S.title
-ORDER BY COUNT(P.songplay_id)
+ORDER BY reproductions DESC
 
 LIMIT 10;
 ```
